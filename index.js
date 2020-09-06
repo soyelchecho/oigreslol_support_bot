@@ -244,5 +244,5 @@ function extractCommand(message){
 
 
 
-bot.login('NzUwOTQwMjc3ODQxMzMwMjQ4.X1B1og.YdoWf_g3hZ9w61Ug4x05rh8UI_Q');
+bot.login(process.env.TOKEN);
 
