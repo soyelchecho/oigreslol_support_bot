@@ -164,6 +164,7 @@ bot.on('message', (message) =>{
                             var miembro = message.guild.members.cache.get(element);
                             if(miembro.id in sessiones[servers][guild_id][salas][channel_id]){
                                 sessiones[servers][guild_id][salas][channel_id][miembro.id] = muerto;
+                                miembro.voice.setMute(true);
                             }
                         }
                     });
@@ -217,6 +218,17 @@ bot.on('message', (message) =>{
                         break;
                     }
                     usuarios = []
+                    invocador_id = message.member.id;
+                    if(invocador_id in sessiones[servers][guild_id][salas][channel_id]){
+                        Object.keys(sessiones[servers][guild_id][salas][channel_id]).forEach(function(key) {
+                            var miembro = message.guild.members.cache.get(key);
+                            if(miembro.voice.channel){
+                                if(miembro.voice.channelID ==  channel_id){
+                                    miembro.voice.setMute(false);
+                                }
+                            }
+                        });
+                    }
                     delete sessiones[servers][guild_id][salas][channel_id]
                     fs.writeFile("./sessiones.json", JSON.stringify(sessiones), (err) => {
                         if (err) console.error(err)
